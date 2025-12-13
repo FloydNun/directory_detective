@@ -8,6 +8,7 @@ import { GeminiCliCard } from './dashboard/gemini-cli-card';
 import { SmartExtractionCard } from './dashboard/smart-extraction-card';
 import { DuplicateDetectionCard } from './dashboard/duplicate-detection-card';
 import { DiffAnalysisCard } from './dashboard/diff-analysis-card';
+import { SupplyChainCard } from './dashboard/supply-chain-card';
 
 export function Dashboard() {
   return (
@@ -25,7 +26,10 @@ export function Dashboard() {
                   <FindReplaceCard />
                   <FileSalvageCard />
                 </div>
-                <FileExplorer />
+                <div className="grid gap-4">
+                  <FileExplorer />
+                  <SupplyChainCard />
+                </div>
               </div>
               <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
                 <SmartExtractionCard />
