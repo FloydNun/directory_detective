@@ -1,22 +1,15 @@
 'use client';
-import { BookText, Loader2, Sparkles, Wand2 } from 'lucide-react';
+import { BookText, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import { useState, useTransition } from 'react';
-import {
-  analyzeDependencies,
-  AnalyzeDependenciesOutput,
-} from '@/ai/flows/supply-chain-analysis';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Textarea } from '../ui/textarea';
 import {
@@ -28,39 +21,32 @@ import {
   TableRow,
 } from '../ui/table';
 
+const mockedResult = {
+  manifest: [
+    {
+      packageName: 'react',
+      description:
+        'A JavaScript library for building user interfaces, forming the foundation of the app\'s components.',
+    },
+    {
+      packageName: 'next',
+      description:
+        'A React framework that provides structure and features like server-side rendering and routing for the web app.',
+    },
+    {
+      packageName: 'zod',
+      description:
+        'A TypeScript-first schema declaration and validation library, used to ensure data structures for AI models are correct.',
+    },
+    {
+      packageName: 'genkit',
+      description:
+        'The core framework for building and running the AI flows that power the generative features of the application.',
+    },
+  ],
+};
+
 export function SupplyChainCard() {
-  const [packages, setPackages] = useState('react, next, zod, genkit');
-  const [goal, setGoal] = useState('Build a web app with AI features.');
-  const [result, setResult] = useState<AnalyzeDependenciesOutput | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
-
-  const handleAnalysis = () => {
-    if (!packages.trim() || !goal.trim()) {
-      toast({
-        variant: 'destructive',
-        title: 'Input Required',
-        description: 'Please provide packages and a goal.',
-      });
-      return;
-    }
-    setResult(null);
-    startTransition(async () => {
-      try {
-        const pkgList = packages.split(',').map(p => p.trim()).filter(Boolean);
-        const response = await analyzeDependencies({ packages: pkgList, goal });
-        setResult(response);
-      } catch (error) {
-        console.error('Error with Supply Chain Analysis:', error);
-        toast({
-          variant: 'destructive',
-          title: 'Analysis Failed',
-          description: 'Could not analyze dependencies.',
-        });
-      }
-    });
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -79,10 +65,9 @@ export function SupplyChainCard() {
             <Textarea
               id="packages-input"
               placeholder="e.g., react, next, tailwindcss"
-              value={packages}
-              onChange={e => setPackages(e.target.value)}
-              disabled={isPending}
+              defaultValue="react, next, zod, genkit"
               rows={3}
+              disabled
             />
           </div>
           <div className="space-y-2">
@@ -90,54 +75,37 @@ export function SupplyChainCard() {
             <Textarea
               id="goal-input"
               placeholder="e.g., Build a modern blog."
-              value={goal}
-              onChange={e => setGoal(e.target.value)}
-              disabled={isPending}
-               rows={3}
+              defaultValue="Build a web app with AI features."
+              rows={3}
+              disabled
             />
           </div>
         </div>
-        {result && (
-          <Alert>
-            <Sparkles className="h-4 w-4" />
-            <AlertTitle>Manifest Generated</AlertTitle>
-            <AlertDescription>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Package</TableHead>
-                    <TableHead>Description</TableHead>
+        <Alert>
+          <Sparkles className="h-4 w-4" />
+          <AlertTitle>Manifest Generated</AlertTitle>
+          <AlertDescription>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Package</TableHead>
+                  <TableHead>Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mockedResult.manifest.map(item => (
+                  <TableRow key={item.packageName}>
+                    <TableCell className="font-medium font-mono text-xs">
+                      {item.packageName}
+                    </TableCell>
+                    <TableCell>{item.description}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {result.manifest.map(item => (
-                    <TableRow key={item.packageName}>
-                      <TableCell className="font-medium font-mono text-xs">
-                        {item.packageName}
-                      </TableCell>
-                      <TableCell>{item.description}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </AlertDescription>
-          </Alert>
-        )}
+                ))}
+              </TableBody>
+            </Table>
+          </AlertDescription>
+        </Alert>
       </CardContent>
-      <CardFooter>
-        <Button
-          onClick={handleAnalysis}
-          disabled={isPending}
-          className="w-full"
-        >
-          {isPending ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Wand2 className="mr-2 h-4 w-4" />
-          )}
-          Generate Manifest
-        </Button>
-      </CardFooter>
     </Card>
   );
 }
