@@ -8,7 +8,6 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {googleAI} from '@genkit-ai/google-genai';
 import {z} from 'genkit';
 
 const AnalyzeDependenciesInputSchema = z.object({
@@ -49,7 +48,7 @@ const prompt = ai.definePrompt({
   name: 'supplyChainAnalysisPrompt',
   input: {schema: AnalyzeDependenciesInputSchema},
   output: {schema: AnalyzeDependenciesOutputSchema},
-  model: googleAI.model('gemini-1.5-flash-latest'),
+  model: 'gemini-1.5-flash-latest',
   prompt: `You are a software supply chain expert. Your task is to create a manifest for a list of software packages, explaining the role of each package in the context of a given project goal.
 
 Project Goal: {{{goal}}}
