@@ -48,7 +48,7 @@ const prompt = ai.definePrompt({
   name: 'supplyChainAnalysisPrompt',
   input: {schema: AnalyzeDependenciesInputSchema},
   output: {schema: AnalyzeDependenciesOutputSchema},
-  model: 'gemini-1.5-flash-latest',
+  model: 'gemini-1.5-flash',
   prompt: `You are a software supply chain expert. Your task is to create a manifest for a list of software packages, explaining the role of each package in the context of a given project goal.
 
 Project Goal: {{{goal}}}
