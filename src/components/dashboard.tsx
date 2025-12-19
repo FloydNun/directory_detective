@@ -9,7 +9,7 @@ import { SmartExtractionCard } from './dashboard/smart-extraction-card';
 import { DuplicateDetectionCard } from './dashboard/duplicate-detection-card';
 import { DiffAnalysisCard } from './dashboard/diff-analysis-card';
 import { SupplyChainCard } from './dashboard/supply-chain-card';
-import { SidebarProvider } from './ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 export function Dashboard() {
   return (
