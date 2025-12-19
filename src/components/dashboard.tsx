@@ -10,6 +10,7 @@ import { DiffAnalysisCard } from './dashboard/diff-analysis-card';
 import { SupplyChainCard } from './dashboard/supply-chain-card';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { NotebookAssistantCard } from './dashboard/notebook-assistant-card';
+import { ArtifactJunkyardCard } from './dashboard/artifact-junkyard-card';
 
 export function Dashboard() {
   return (
@@ -30,6 +31,7 @@ export function Dashboard() {
                   </div>
                   <div className="grid gap-4">
                     <FileExplorer />
+                    <ArtifactJunkyardCard />
                     <SupplyChainCard />
                   </div>
                 </div>
