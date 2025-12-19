@@ -39,11 +39,9 @@ export function ComparisonView({ files, onBack }: ComparisonViewProps) {
           <div key={file} className="flex flex-col gap-2">
             <div className="font-mono text-sm p-2 bg-muted rounded-md">{file}</div>
             <Card className="flex-1">
-              <CardContent className="p-4">
+              <CardContent className="p-0">
                 <ScrollArea className="h-[400px]">
-                  <p className="text-sm text-muted-foreground">
-                    File content will be shown here.
-                  </p>
+                  <pre className="p-4 text-sm text-muted-foreground">{`// Content for ${file} will be displayed here.`}</pre>
                 </ScrollArea>
               </CardContent>
             </Card>
