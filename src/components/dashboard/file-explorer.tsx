@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useState } from 'react';
-import { Folder, ChevronRight, FileCode, CheckSquare, Square } from 'lucide-react';
+import { Folder, FileCode, CheckSquare, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ComparisonView } from './comparison-view';
+import { cn } from '@/lib/utils';
 
 const projectStructure = [
   {
@@ -72,13 +73,21 @@ const projectStructure = [
   { name: 'tailwind.config.ts', type: 'file', path: 'tailwind.config.ts' },
 ];
 
-const FileTree = ({ items, selectedFiles, onSelectFile }: { items: any[], selectedFiles: string[], onSelectFile: (path: string) => void }) => {
+const FileTree = ({ items, selectedFiles, onSelectFile }: { items: any[], selectedFiles: string[], onSelectFile: (path: string, isFile: boolean) => void }) => {
   return (
     <ul className="space-y-1">
       {items.map(item => (
         <li key={item.path}>
-          <div className="flex items-center text-sm hover:bg-muted/50 rounded-md cursor-pointer" onClick={() => onSelectFile(item.path)}>
-            {selectedFiles.includes(item.path) ? <CheckSquare className="h-4 w-4 mr-1 text-primary"/> : <Square className="h-4 w-4 mr-1"/>}
+          <div
+            className={cn(
+              'flex items-center text-sm rounded-md p-1',
+              item.type === 'file' ? 'cursor-pointer hover:bg-muted/50' : 'cursor-default'
+            )}
+            onClick={() => onSelectFile(item.path, item.type === 'file')}
+          >
+            {item.type === 'file' ? (
+              selectedFiles.includes(item.path) ? <CheckSquare className="h-4 w-4 mr-2 text-primary"/> : <Square className="h-4 w-4 mr-2 text-muted-foreground"/>
+            ) : <div className="w-6"/>}
             {item.type === 'folder' ? (
               <Folder className="h-4 w-4 mr-2 text-primary" />
             ) : (
@@ -95,7 +104,7 @@ const FileTree = ({ items, selectedFiles, onSelectFile }: { items: any[], select
             </span>
           </div>
           {item.children && (
-            <div className="pl-6 border-l ml-3.5">
+            <div className="pl-6 border-l ml-[1.125rem]">
               <FileTree items={item.children} selectedFiles={selectedFiles} onSelectFile={onSelectFile} />
             </div>
           )}
@@ -109,7 +118,9 @@ export function FileExplorer() {
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
   const [comparing, setComparing] = useState(false);
 
-  const handleSelectFile = (path: string) => {
+  const handleSelectFile = (path: string, isFile: boolean) => {
+    if (!isFile) return;
+
     setSelectedFiles(prev => {
       if (prev.includes(path)) {
         return prev.filter(p => p !== path);
@@ -136,11 +147,13 @@ export function FileExplorer() {
       <CardHeader>
         <CardTitle>File Explorer</CardTitle>
         <CardDescription>
-          Select up to 4 files/directories to compare.
+          Select up to 4 files to compare.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <FileTree items={projectStructure} selectedFiles={selectedFiles} onSelectFile={handleSelectFile} />
+        <div className="h-[400px] overflow-y-auto pr-4">
+          <FileTree items={projectStructure} selectedFiles={selectedFiles} onSelectFile={handleSelectFile} />
+        </div>
         <Button onClick={handleCompareClick} disabled={selectedFiles.length < 2} className="mt-4 w-full">
           Compare {selectedFiles.length > 0 && `(${selectedFiles.length})`} Selections
         </Button>
