@@ -3,28 +3,72 @@
 @tailwind utilities;
 
 @layer base {
-  body { 
-    font-family: 'Inter', sans-serif; 
+  :root {
+    --background: 39 10% 98%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 145 44% 34%;
+    --primary-foreground: 300 0% 100%;
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 220 9% 37%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 38 65% 61%;
+    --accent-foreground: 41 94% 23%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 145, 44%, 34%;
+    --radius: 0.5rem;
+
+    --sidebar: 39, 10%, 98%;
+    --sidebar-foreground: 224, 71.4%, 4.1%;
+    --sidebar-border: 214.3, 31.8%, 91.4%;
+    --sidebar-accent: 220, 13%, 91%;
+    --sidebar-accent-foreground: 220, 9%, 37%;
+    --sidebar-ring: 145, 44%, 34%;
   }
-  h1, h2, h3, h4 { 
-    font-family: 'Merriweather', serif; 
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 145 44% 34%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 38 65% 61%;
+    --accent-foreground: 41 94% 23%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 145, 44%, 34%;
+
+    --sidebar: 222.2, 84%, 4.9%;
+    --sidebar-foreground: 210, 40%, 98%;
+    --sidebar-border: 217.2, 32.6%, 17.5%;
+    --sidebar-accent: 217.2, 32.6%, 17.5%;
+    --sidebar-accent-foreground: 210, 40%, 98%;
+    --sidebar-ring: 145, 44%, 34%;
   }
-  .legal-text { 
-    font-size: 0.95rem; 
-    line-height: 1.8; 
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-  .citation { 
-    font-size: 0.8rem; 
-    color: #6b7280; 
-    font-style: italic; 
-  }
-  .highlight-box { 
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); 
-  }
-  .chat-container { 
-    height: 400px; 
-  }
-  @media print {
-    .no-print { display: none !important; }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }
