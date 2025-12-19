@@ -4,12 +4,12 @@ import { FileExplorer } from './dashboard/file-explorer';
 import { DependencyGraph } from './dashboard/dependency-graph';
 import { FindReplaceCard } from './dashboard/find-replace-card';
 import { FileSalvageCard } from './dashboard/file-salvage-card';
-import { GeminiCliCard } from './dashboard/gemini-cli-card';
 import { SmartExtractionCard } from './dashboard/smart-extraction-card';
 import { DuplicateDetectionCard } from './dashboard/duplicate-detection-card';
 import { DiffAnalysisCard } from './dashboard/diff-analysis-card';
 import { SupplyChainCard } from './dashboard/supply-chain-card';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import { NotebookAssistantCard } from './dashboard/notebook-assistant-card';
 
 export function Dashboard() {
   return (
@@ -35,7 +35,7 @@ export function Dashboard() {
                 </div>
                 <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
                   <SmartExtractionCard />
-                  <GeminiCliCard />
+                  <NotebookAssistantCard />
                   <DependencyGraph />
                 </div>
               </main>

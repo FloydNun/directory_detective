@@ -10,7 +10,7 @@ import {
   Save,
   SearchCode,
   Share2,
-  GitBranchPlus,
+  Book,
   Package2,
 } from 'lucide-react';
 import {
@@ -106,9 +106,9 @@ export function Sidebar() {
                 variant="ghost"
                 size="icon"
                 className="h-9 w-9"
-                tooltip="Gemini CLI"
+                tooltip="Notebook Assistant"
               >
-                <GitBranchPlus className="h-5 w-5" />
+                <Book className="h-5 w-5" />
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarFooter>
