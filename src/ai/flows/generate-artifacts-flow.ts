@@ -7,6 +7,7 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { googleAI } from '@genkit-ai/google-genai';
 import { z } from 'genkit';
 
 const ArtifactSchema = z.object({
@@ -24,6 +25,7 @@ export async function generateArtifacts(): Promise<Artifact[]> {
 
 const prompt = ai.definePrompt({
   name: 'generateArtifactsPrompt',
+  model: googleAI.model('gemini-1.5-flash-latest'),
   output: { schema: ArtifactListSchema },
   prompt: `Generate a list of 5 sample development artifacts. The list should include a mix of code snippets, text descriptions, and image generation prompts. Each artifact must have a unique ID, a type, and content.`,
 });
